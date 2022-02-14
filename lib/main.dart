@@ -1,7 +1,17 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:new_design/pages/home_page.dart';
 
-void main() {
+void main() async {
+  try {
+    WidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp();
+    // ignore: avoid_print
+    print('baglantı oldu');
+  } catch (e) {
+    // ignore: avoid_print
+    print('hata');
+  }
   runApp(const MyApp());
 }
 

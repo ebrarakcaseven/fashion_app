@@ -1,11 +1,13 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:new_design/navigaton_drawer.dart';
 import 'package:new_design/pages/blog_pages.dart';
 import 'package:new_design/pages/products_page.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:new_design/service/status_service.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -27,29 +29,31 @@ class _HomeState extends State<Home> {
   String answer = "All";
   String selected = "All";
 
+// ignore: prefer_final_fields
+  StatusService _statusService = StatusService();
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Scaffold(
         drawer: const NavigatonDrawerWidget(),
         appBar: AppBar(
+          centerTitle: true,
           backgroundColor: Colors.white,
           //title: Text("OPEN FASHİON", style: TextStyle(color: Colors.black)),
-          title: Center(
-            child: RichText(
-                textAlign: TextAlign.center,
-                text: const TextSpan(
-                    text: "OPEN",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 19,
-                    ),
-                    children: <TextSpan>[
-                      TextSpan(
-                          text: '\nFASHİON',
-                          style: TextStyle(color: Colors.black, fontSize: 19))
-                    ])),
-          ),
-
+          title: RichText(
+              textAlign: TextAlign.center,
+              text: const TextSpan(
+                  text: "OPEN",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 19,
+                  ),
+                  children: <TextSpan>[
+                    TextSpan(
+                        text: '\nFASHİON',
+                        style: TextStyle(color: Colors.black, fontSize: 19))
+                  ])),
+          iconTheme: const IconThemeData(color: Colors.black),
           actions: <Widget>[
             IconButton(
               icon: const Icon(
@@ -181,14 +185,83 @@ class _HomeState extends State<Home> {
                     children: [
                       const Text("F O L L O W  U S",
                           style: TextStyle(fontSize: 25)),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        // ignore: prefer_const_literals_to_create_immutables
-                        children: [
-                          const Icon(FontAwesomeIcons.twitter),
-                          const Icon(FontAwesomeIcons.instagram),
-                          const Icon(FontAwesomeIcons.youtube),
-                        ],
+                      StreamBuilder<QuerySnapshot>(
+                          stream: _statusService.getFollow(),
+                          builder: (context, snapshot) {
+                            if (!snapshot.hasData) {
+                              return const Text(
+                                'no data...',
+                              );
+                            } else {
+                              return GridView.builder(
+                                  scrollDirection: Axis.vertical,
+                                  shrinkWrap: true,
+                                  itemCount: snapshot.data?.docs.length,
+                                  gridDelegate:
+                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                    mainAxisSpacing: 2,
+                                    crossAxisSpacing: 2,
+                                    crossAxisCount: 2,
+                                    childAspectRatio: 0.9,
+                                  ),
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    DocumentSnapshot mypost =
+                                        snapshot.data!.docs[index];
+                                    return Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 15.0,
+                                          right: 15,
+                                          top: 5,
+                                          bottom: 10),
+                                      // ignore: avoid_unnecessary_containers
+                                      child: Container(
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Column(
+                                              children: [
+                                                CircleAvatar(
+                                                  radius: size.height * 0.09,
+                                                  backgroundImage: mypost[
+                                                              'image'] ==
+                                                          ""
+                                                      ? const NetworkImage(
+                                                          "https://www.gentas.com.tr/wp-content/uploads/2021/05/3190-siyah_renk_g483_1250x1000_t3cksofn.jpg")
+                                                      : NetworkImage(
+                                                          mypost['image']),
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            top: 90.0,
+                                                            right: 45.0),
+                                                    child: Text(
+                                                        "${mypost['name']}",
+                                                        style: const TextStyle(
+                                                            fontSize: 18)),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  });
+                            }
+                          }),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 90.0, left: 90.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          // ignore: prefer_const_literals_to_create_immutables
+                          children: [
+                            const Icon(FontAwesomeIcons.twitter),
+                            const Icon(FontAwesomeIcons.instagram),
+                            const Icon(FontAwesomeIcons.youtube),
+                          ],
+                        ),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
