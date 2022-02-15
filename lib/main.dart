@@ -25,6 +25,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        fontFamily: 'Tenor Sans',
         scaffoldBackgroundColor: Colors.white,
       ),
       home: const Home(),

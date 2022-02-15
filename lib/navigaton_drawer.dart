@@ -7,9 +7,19 @@ class NavigatonDrawerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(children: [
-        const DrawerHeader(
-          decoration: BoxDecoration(color: Colors.transparent),
-          child: Text("LOGO"),
+        DrawerHeader(
+          decoration: const BoxDecoration(color: Colors.transparent),
+          // ignore: avoid_unnecessary_containers
+          child: Container(
+              child: Column(children: [
+            Material(
+              child: Image.asset(
+                "assets/images/logo.png",
+                height: 120,
+                width: 300,
+              ),
+            )
+          ])),
         ),
         ListTile(
           title: const Text('New'),
@@ -36,11 +46,19 @@ class NavigatonDrawerWidget extends StatelessWidget {
           onTap: () {},
         ),
         ListTile(
-          title: const Text('(786) 713-8616'),
+          leading: const Icon(Icons.phone),
+          title: Text(
+            '(786) 713-8616',
+            style: TextStyle(color: Colors.black.withOpacity(0.7)),
+          ),
           onTap: () {},
         ),
         ListTile(
-          title: const Text('Store locator'),
+          leading: const Icon(Icons.location_on),
+          title: Text(
+            'Store locator',
+            style: TextStyle(color: Colors.black.withOpacity(0.7)),
+          ),
           onTap: () {},
         ),
       ]),
