@@ -9,6 +9,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:new_design/service/status_service.dart';
 
+import 'about_pages.dart';
+
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
 
@@ -45,13 +47,16 @@ class _HomeState extends State<Home> {
               text: const TextSpan(
                   text: "OPEN",
                   style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 19,
-                  ),
+                      color: Colors.black,
+                      fontSize: 19,
+                      fontFamily: 'Tenor Sans'),
                   children: <TextSpan>[
                     TextSpan(
                         text: '\nFASHİON',
-                        style: TextStyle(color: Colors.black, fontSize: 19))
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 19,
+                            fontFamily: 'Tenor Sans'))
                   ])),
           iconTheme: const IconThemeData(color: Colors.black),
           actions: <Widget>[
@@ -122,17 +127,17 @@ class _HomeState extends State<Home> {
                   ),
                 ),
                 InkWell(
-                  onTap: () => Navigator.push(
+                  /*onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const Products()),
-                  ),
+                  ),*/
                   child: Container(
                     height: 55,
                     width: 210,
                     child: const Center(
                         child: Text(
                       "EXPLORE COLLECTİON",
-                      style: TextStyle(fontSize: 16),
+                      style: TextStyle(fontSize: 15),
                     )),
                     decoration: BoxDecoration(
                       color: const Color.fromARGB(255, 255, 239, 239),
@@ -176,15 +181,107 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                 ),
-                Container(height: 650, color: Colors.grey),
+                Column(
+                  children: [
+                    StreamBuilder<QuerySnapshot>(
+                        stream: _statusService.getProducts(),
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData) {
+                            return const Text(
+                              'no data...',
+                            );
+                          } else {
+                            return GridView.builder(
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                itemCount: 4,
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                  mainAxisSpacing: 2,
+                                  crossAxisSpacing: 2,
+                                  crossAxisCount: 2,
+                                  childAspectRatio: 0.9,
+                                ),
+                                itemBuilder: (BuildContext context, int index) {
+                                  DocumentSnapshot mypost =
+                                      snapshot.data!.docs[index];
+                                  return Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 5.0,
+                                        right: 5.0,
+                                        top: 15.0,
+                                        bottom: 5),
+                                    // ignore: avoid_unnecessary_containers
+                                    child: Container(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          CircleAvatar(
+                                            backgroundImage: mypost['image'] ==
+                                                    ""
+                                                ? const NetworkImage(
+                                                    "https://www.gentas.com.tr/wp-content/uploads/2021/05/3190-siyah_renk_g483_1250x1000_t3cksofn.jpg")
+                                                : NetworkImage(mypost['image']),
+                                            radius: size.height * 0.08,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 8.0, left: 5.0),
+                                            child: Text(
+                                                "${mypost['productsName']}",
+                                                style: const TextStyle(
+                                                    fontSize: 13)),
+                                          ),
+                                          Text("${mypost['productsPrice']}",
+                                              style: const TextStyle(
+                                                  fontSize: 13)),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                });
+                          }
+                        }),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 45.0, bottom: 20.0),
+                      child: Container(
+                          height: 60,
+                          width: 200,
+                          color: Colors.white,
+                          child: Center(
+                              child: InkWell(
+                            onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const Products()),
+                            ),
+                            child: const Text("Explore More ->",
+                                style: TextStyle(fontSize: 20)),
+                          ))),
+                    )
+                  ],
+                ),
+
+                const Padding(
+                  padding: EdgeInsets.only(top: 20.0),
+                  child: Text(
+                    "C O L L E C T İ O N S",
+                    style: TextStyle(fontSize: 24),
+                  ),
+                ),
+
                 // ignore: sized_box_for_whitespace
                 Container(
-                  height: 750,
+                  height: 850,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text("F O L L O W  U S",
-                          style: TextStyle(fontSize: 25)),
+                      const Padding(
+                        padding: EdgeInsets.only(top: 20, bottom: 20.0),
+                        child: Text("F O L L O W  U S",
+                            style: TextStyle(fontSize: 25)),
+                      ),
                       StreamBuilder<QuerySnapshot>(
                           stream: _statusService.getFollow(),
                           builder: (context, snapshot) {
@@ -263,15 +360,83 @@ class _HomeState extends State<Home> {
                           ],
                         ),
                       ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 20.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          // ignore: prefer_const_literals_to_create_immutables
+                          children: [
+                            StreamBuilder<QuerySnapshot>(
+                                stream: _statusService.getContact(),
+                                builder: (context, snapshot) {
+                                  if (!snapshot.hasData) {
+                                    return const Text(
+                                      'no data...',
+                                    );
+                                  } else {
+                                    return ListView.builder(
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        scrollDirection: Axis.vertical,
+                                        shrinkWrap: true,
+                                        itemCount: snapshot.data?.docs.length,
+                                        itemBuilder: (context, index) {
+                                          DocumentSnapshot mypost =
+                                              snapshot.data!.docs[index];
+                                          // ignore: avoid_unnecessary_containers
+                                          return Container(
+                                            child: Column(
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Text(
+                                                      "${mypost['email']}",
+                                                      style: const TextStyle(
+                                                          fontSize: 16)),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Text(
+                                                      "${mypost['phone']}",
+                                                      style: const TextStyle(
+                                                          fontSize: 16)),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Text(
+                                                      "${mypost['workingHours']}",
+                                                      style: const TextStyle(
+                                                          fontSize: 16)),
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        });
+                                  }
+                                }),
+                          ],
+                        ),
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         // ignore: prefer_const_literals_to_create_immutables
                         children: [
-                          const Padding(
+                          Padding(
+                            // ignore: prefer_const_constructors
                             padding: EdgeInsets.only(left: 50.0, top: 50.0),
-                            child: Text("About",
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 18)),
+                            child: InkWell(
+                              onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const About()),
+                              ),
+                              child: const Text("About",
+                                  style: TextStyle(
+                                      color: Colors.black, fontSize: 18)),
+                            ),
                           ),
                           const Padding(
                             padding: EdgeInsets.only(top: 50.0),
