@@ -14,4 +14,19 @@ class StatusService {
     var ref = _firestore.collection("blog").snapshots();
     return ref;
   }
+
+  Stream<QuerySnapshot> getContact() {
+    var ref = _firestore.collection("contact").snapshots();
+    return ref;
+  }
+
+  Stream<QuerySnapshot> getProducts() {
+    var ref = _firestore.collection("products").snapshots();
+    return ref;
+  }
+
+  Stream<QuerySnapshot> getAbout() {
+    var ref = _firestore.collection("about").snapshots();
+    return ref;
+  }
 }
