@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:new_design/navigaton_drawer.dart';
 import 'package:new_design/pages/blog_pages.dart';
 import 'package:new_design/pages/collection/colleciton_pages.dart';
+import 'package:new_design/pages/contact_page.dart';
 import 'package:new_design/pages/products_page.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -36,13 +37,13 @@ class _HomeState extends State<Home> {
   StatusService _statusService = StatusService();
   @override
   Widget build(BuildContext context) {
+    // ignore: unused_local_variable
     var size = MediaQuery.of(context).size;
     return Scaffold(
         drawer: const NavigatonDrawerWidget(),
         appBar: AppBar(
           centerTitle: true,
           backgroundColor: Colors.white,
-          //title: Text("OPEN FASHİON", style: TextStyle(color: Colors.black)),
           title: RichText(
               textAlign: TextAlign.center,
               text: const TextSpan(
@@ -66,18 +67,14 @@ class _HomeState extends State<Home> {
                 Icons.search,
                 color: Colors.black,
               ),
-              onPressed: () {
-                // do something
-              },
+              onPressed: () {},
             ),
             IconButton(
               icon: const Icon(
                 Icons.shopping_bag,
                 color: Colors.black,
               ),
-              onPressed: () {
-                // do something
-              },
+              onPressed: () {},
             )
           ],
         ),
@@ -149,115 +146,141 @@ class _HomeState extends State<Home> {
                   ),
                 ),
                 const Padding(
-                  padding: EdgeInsets.only(top: 30.0),
+                  padding: EdgeInsets.only(top: 60.0, bottom: 30.0),
                   child: Text("N E W  A R R I V A L",
                       style: TextStyle(color: Colors.black, fontSize: 25)),
                 ),
                 // ignore: sized_box_for_whitespace
-                Padding(
-                  padding: const EdgeInsets.only(left: 27.0, top: 15.0),
-                  // ignore: sized_box_for_whitespace
-                  child: Container(
-                    height: 50,
-                    child: Center(
-                      child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: _choices.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return RaisedButton(
-                              child: Text(_choices[index]),
-                              textColor: selected == _choices[index]
-                                  ? Colors.black
-                                  : const Color.fromARGB(255, 126, 119, 119),
-                              color: Colors.white,
-                              onPressed: () => {
-                                setState(() {
-                                  selected = _choices[index];
-                                }),
-                                // ignore: avoid_print
-                                print(_choices[index]),
-                              },
-                            );
-                          }),
-                    ),
-                  ),
-                ),
-                Column(
-                  children: [
-                    StreamBuilder<QuerySnapshot>(
-                        stream: _statusService.getProducts(),
-                        builder: (context, snapshot) {
-                          if (!snapshot.hasData) {
-                            return const Text(
-                              'no data...',
-                            );
-                          } else {
-                            return GridView.builder(
-                                scrollDirection: Axis.vertical,
-                                shrinkWrap: true,
-                                itemCount: 4,
-                                gridDelegate:
-                                    const SliverGridDelegateWithFixedCrossAxisCount(
-                                  mainAxisSpacing: 2,
-                                  crossAxisSpacing: 2,
-                                  crossAxisCount: 2,
-                                  childAspectRatio: 0.9,
-                                ),
-                                itemBuilder: (BuildContext context, int index) {
-                                  DocumentSnapshot mypost =
-                                      snapshot.data!.docs[index];
-                                  return Padding(
+                Container(
+                  height: 650,
+                  child: DefaultTabController(
+                      length: 4,
+                      child: Column(children: [
+                        Container(
+                          height: 50,
+                          constraints: const BoxConstraints.expand(height: 50),
+                          child: const TabBar(
+                            tabs: [
+                              Tab(text: "All"),
+                              Tab(text: "Dress"),
+                              Tab(text: "Tsirt"),
+                              Tab(text: "Bag"),
+                            ],
+                            labelColor: Colors.black,
+                          ),
+                        ),
+                        Expanded(
+                          child: Container(
+                              child: TabBarView(children: [
+                            Container(
+                              child: Column(
+                                children: [
+                                  StreamBuilder<QuerySnapshot>(
+                                      stream: _statusService.getProducts(),
+                                      builder: (context, snapshot) {
+                                        if (!snapshot.hasData) {
+                                          return const Text(
+                                            'no data...',
+                                          );
+                                        } else {
+                                          return GridView.builder(
+                                              scrollDirection: Axis.vertical,
+                                              shrinkWrap: true,
+                                              itemCount: 4,
+                                              gridDelegate:
+                                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                                mainAxisSpacing: 2,
+                                                crossAxisSpacing: 2,
+                                                crossAxisCount: 2,
+                                                childAspectRatio: 0.9,
+                                              ),
+                                              itemBuilder:
+                                                  (BuildContext context,
+                                                      int index) {
+                                                DocumentSnapshot mypost =
+                                                    snapshot.data!.docs[index];
+                                                return Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 5.0,
+                                                          right: 5.0,
+                                                          top: 15.0,
+                                                          bottom: 5),
+                                                  // ignore: avoid_unnecessary_containers
+                                                  child: Container(
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Image(
+                                                            height: 140,
+                                                            image: NetworkImage(
+                                                                mypost[
+                                                                    'image'])),
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  top: 8.0,
+                                                                  left: 5.0),
+                                                          child: Text(
+                                                              "${mypost['productsName']}",
+                                                              style:
+                                                                  const TextStyle(
+                                                                      fontSize:
+                                                                          13)),
+                                                        ),
+                                                        Text(
+                                                            "${mypost['productsPrice']}",
+                                                            style:
+                                                                const TextStyle(
+                                                                    fontSize:
+                                                                        13)),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                );
+                                              });
+                                        }
+                                      }),
+                                  Padding(
                                     padding: const EdgeInsets.only(
-                                        left: 5.0,
-                                        right: 5.0,
-                                        top: 15.0,
-                                        bottom: 5),
-                                    // ignore: avoid_unnecessary_containers
+                                        top: 30.0, bottom: 20.0),
                                     child: Container(
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Image(
-                                              height: 140,
-                                              image: NetworkImage(
-                                                  mypost['image'])),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 8.0, left: 5.0),
-                                            child: Text(
-                                                "${mypost['productsName']}",
-                                                style: const TextStyle(
-                                                    fontSize: 13)),
+                                        height: 60,
+                                        width: 200,
+                                        color: Colors.white,
+                                        child: Center(
+                                            child: InkWell(
+                                          onTap: () => Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const Products()),
                                           ),
-                                          Text("${mypost['productsPrice']}",
-                                              style: const TextStyle(
-                                                  fontSize: 13)),
-                                        ],
-                                      ),
-                                    ),
-                                  );
-                                });
-                          }
-                        }),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 30.0, bottom: 20.0),
-                      child: Container(
-                          height: 60,
-                          width: 200,
-                          color: Colors.white,
-                          child: Center(
-                              child: InkWell(
-                            onTap: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const Products()),
+                                          child: const Text("Explore More ->",
+                                              style: TextStyle(fontSize: 20)),
+                                        ))),
+                                  )
+                                ],
+                              ),
                             ),
-                            child: const Text("Explore More ->",
-                                style: TextStyle(fontSize: 20)),
-                          ))),
-                    )
-                  ],
+                            Container(
+                              height: 50,
+                              child: Text("b"),
+                            ),
+                            Container(
+                              height: 50,
+                              child: Text("c"),
+                            ),
+                            Container(
+                              height: 50,
+                              child: Text("d"),
+                            ),
+                          ])),
+                        )
+                      ])),
                 ),
 
                 const Padding(
@@ -463,11 +486,18 @@ class _HomeState extends State<Home> {
                                       color: Colors.black, fontSize: 18)),
                             ),
                           ),
-                          const Padding(
-                            padding: EdgeInsets.only(top: 50.0),
-                            child: Text("Contact",
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 18)),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 50.0),
+                            child: InkWell(
+                              onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const Contact()),
+                              ),
+                              child: const Text("Contact",
+                                  style: TextStyle(
+                                      color: Colors.black, fontSize: 18)),
+                            ),
                           ),
                           Padding(
                             padding:
