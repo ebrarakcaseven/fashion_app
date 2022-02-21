@@ -217,14 +217,10 @@ class _HomeState extends State<Home> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          CircleAvatar(
-                                            backgroundImage: mypost['image'] ==
-                                                    ""
-                                                ? const NetworkImage(
-                                                    "https://www.gentas.com.tr/wp-content/uploads/2021/05/3190-siyah_renk_g483_1250x1000_t3cksofn.jpg")
-                                                : NetworkImage(mypost['image']),
-                                            radius: size.height * 0.08,
-                                          ),
+                                          Image(
+                                              height: 140,
+                                              image: NetworkImage(
+                                                  mypost['image'])),
                                           Padding(
                                             padding: const EdgeInsets.only(
                                                 top: 8.0, left: 5.0),
@@ -244,7 +240,7 @@ class _HomeState extends State<Home> {
                           }
                         }),
                     Padding(
-                      padding: const EdgeInsets.only(top: 45.0, bottom: 20.0),
+                      padding: const EdgeInsets.only(top: 30.0, bottom: 20.0),
                       child: Container(
                           height: 60,
                           width: 200,
@@ -270,7 +266,40 @@ class _HomeState extends State<Home> {
                     style: TextStyle(fontSize: 24),
                   ),
                 ),
-
+                StreamBuilder<QuerySnapshot>(
+                    stream: _statusService.getCollection(),
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData) {
+                        return const Text(
+                          'No Data...',
+                        );
+                      } else {
+                        return ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemCount: snapshot.data?.docs.length,
+                            itemBuilder: (context, index) {
+                              DocumentSnapshot mypost =
+                                  snapshot.data!.docs[index];
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: InkWell(
+                                  // ignore: avoid_unnecessary_containers
+                                  child: Container(
+                                    child: Column(
+                                      children: [
+                                        Image(
+                                            image:
+                                                NetworkImage(mypost['image']))
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            });
+                      }
+                    }),
                 // ignore: sized_box_for_whitespace
                 Container(
                   height: 850,
@@ -319,26 +348,13 @@ class _HomeState extends State<Home> {
                                           children: [
                                             Column(
                                               children: [
-                                                CircleAvatar(
-                                                  radius: size.height * 0.09,
-                                                  backgroundImage: mypost[
-                                                              'image'] ==
-                                                          ""
-                                                      ? const NetworkImage(
-                                                          "https://www.gentas.com.tr/wp-content/uploads/2021/05/3190-siyah_renk_g483_1250x1000_t3cksofn.jpg")
-                                                      : NetworkImage(
-                                                          mypost['image']),
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            top: 90.0,
-                                                            right: 45.0),
-                                                    child: Text(
-                                                        "${mypost['name']}",
-                                                        style: const TextStyle(
-                                                            fontSize: 18)),
-                                                  ),
-                                                ),
+                                                Image(
+                                                    height: 130,
+                                                    image: NetworkImage(
+                                                        mypost['image'])),
+                                                Text("${mypost['name']}",
+                                                    style: const TextStyle(
+                                                        fontSize: 18)),
                                               ],
                                             ),
                                           ],
