@@ -94,7 +94,7 @@ class _ContactState extends State<Contact> {
                         itemBuilder: (context, index) {
                           DocumentSnapshot mypost = snapshot.data!.docs[index];
                           return Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(15.0),
                             child: Column(
                               children: [
                                 const Padding(
@@ -108,7 +108,7 @@ class _ContactState extends State<Contact> {
                                 ),
                                 Text("${mypost['text1']}",
                                     style: TextStyle(
-                                        fontSize: 17,
+                                        fontSize: 16,
                                         color: Colors.black.withOpacity(0.6))),
                                 Padding(
                                   padding: const EdgeInsets.only(top: 10.0),
@@ -134,7 +134,7 @@ class _ContactState extends State<Contact> {
                                 ),
                                 Text("${mypost['text2']}",
                                     style: TextStyle(
-                                        fontSize: 17,
+                                        fontSize: 16,
                                         color: Colors.black.withOpacity(0.6))),
                                 Padding(
                                   padding: const EdgeInsets.only(top: 10.0),
@@ -160,7 +160,7 @@ class _ContactState extends State<Contact> {
                                 ),
                                 Text("${mypost['text3']}",
                                     style: TextStyle(
-                                        fontSize: 17,
+                                        fontSize: 16,
                                         color: Colors.black.withOpacity(0.6))),
                               ],
                             ),
