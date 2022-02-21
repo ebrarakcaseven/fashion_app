@@ -39,4 +39,9 @@ class StatusService {
     var ref = _firestore.collection("contactus").snapshots();
     return ref;
   }
+
+  Stream<QuerySnapshot> getCollectionCover() {
+    var ref = _firestore.collection("collectioncover").snapshots();
+    return ref;
+  }
 }

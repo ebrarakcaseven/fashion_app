@@ -69,7 +69,15 @@ class _CollectionState extends State<Collection> {
       backgroundColor: Colors.black,
       body: SingleChildScrollView(
           child: Column(children: [
-        Container(height: 70, color: Colors.black),
+        const Padding(
+          padding: EdgeInsets.only(bottom: 45.0, top: 45.0),
+          child: Text("OCTOBER COLLECTİON",
+              style: TextStyle(
+                  fontSize: 27,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontStyle: FontStyle.italic)),
+        ),
         StreamBuilder<QuerySnapshot>(
             stream: _statusService.getCollection(),
             builder: (context, snapshot) {
@@ -92,32 +100,10 @@ class _CollectionState extends State<Collection> {
                           child: Container(
                             child: Column(
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 25.0),
-                                  child: Text("${mypost['toptitle']}",
-                                      style: const TextStyle(
-                                          fontSize: 27,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                          fontStyle: FontStyle.italic)),
-                                ),
-                                InkWell(
-                                    onTap: () {
-                                      // ignore: unused_label
-                                      onTap:
-                                      () => Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    CollectionDetail(snapshot
-                                                        .data!.docs[index])),
-                                          );
-                                    },
-                                    child: Image(
-                                        image: NetworkImage(mypost['image']))),
+                                Image(image: NetworkImage(mypost['image'])),
                                 Padding(
                                   padding: const EdgeInsets.only(
-                                      top: 20.0, bottom: 5.0),
+                                      top: 20.0, bottom: 30.0),
                                   child: Text("${mypost['title']}",
                                       style: const TextStyle(
                                           fontSize: 15, color: Colors.white)),
