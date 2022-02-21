@@ -5,6 +5,8 @@ import 'package:new_design/pages/home_page.dart';
 import 'package:new_design/service/status_service.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'about_pages.dart';
+
 class Blog extends StatefulWidget {
   const Blog({Key? key}) : super(key: key);
 
@@ -17,6 +19,7 @@ StatusService _statusService = StatusService();
 class _BlogState extends State<Blog> {
   @override
   Widget build(BuildContext context) {
+    // ignore: unused_local_variable
     var size = MediaQuery.of(context).size;
     return Scaffold(
       drawer: const NavigatonDrawerWidget(),
@@ -34,13 +37,16 @@ class _BlogState extends State<Blog> {
               text: const TextSpan(
                   text: "OPEN",
                   style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 19,
-                  ),
+                      color: Colors.black,
+                      fontSize: 19,
+                      fontFamily: 'Tenor Sans'),
                   children: <TextSpan>[
                     TextSpan(
                         text: '\nFASHİON',
-                        style: TextStyle(color: Colors.black, fontSize: 19))
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 19,
+                            fontFamily: 'Tenor Sans'))
                   ])),
         ),
         iconTheme: const IconThemeData(color: Colors.black),
@@ -73,87 +79,58 @@ class _BlogState extends State<Blog> {
             // ignore: prefer_const_literals_to_create_immutables
             children: [
               const Padding(
-                padding: EdgeInsets.only(top: 50.0),
+                padding: EdgeInsets.only(top: 35.0, bottom: 35.0),
                 child: Text("B L O G",
                     style: TextStyle(color: Colors.black, fontSize: 25)),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 10.0),
-                child: StreamBuilder<QuerySnapshot>(
-                    stream: _statusService.getBlog(),
-                    builder: (context, snapshot) {
-                      if (!snapshot.hasData) {
-                        return const Text(
-                          'no data...',
-                        );
-                      } else {
-                        return GridView.builder(
-                            physics: const NeverScrollableScrollPhysics(),
-                            scrollDirection: Axis.vertical,
-                            shrinkWrap: true,
-                            itemCount: snapshot.data?.docs.length,
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              mainAxisSpacing: 1,
-                              crossAxisSpacing: 10,
-                              crossAxisCount: 1,
-                              childAspectRatio: 1.5,
-                            ),
-                            itemBuilder: (BuildContext context, int index) {
-                              DocumentSnapshot mypost =
-                                  snapshot.data!.docs[index];
-                              return Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 15.0, right: 15, top: 5, bottom: 10),
+              StreamBuilder<QuerySnapshot>(
+                  stream: _statusService.getBlog(),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return const Text(
+                        'No Data...',
+                      );
+                    } else {
+                      return ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemCount: snapshot.data?.docs.length,
+                          itemBuilder: (context, index) {
+                            DocumentSnapshot mypost =
+                                snapshot.data!.docs[index];
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: InkWell(
+                                // ignore: avoid_unnecessary_containers
                                 child: Container(
-                                  decoration: BoxDecoration(
-                                      color: Colors.brown[50],
-                                      border:
-                                          Border.all(color: Colors.transparent),
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(10))),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
+                                  child: Column(
                                     children: [
-                                      Row(
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 8.0, right: 3.0),
-                                            child: CircleAvatar(
-                                              backgroundImage: mypost[
-                                                          'image'] ==
-                                                      ""
-                                                  ? const NetworkImage(
-                                                      "https://www.gentas.com.tr/wp-content/uploads/2021/05/3190-siyah_renk_g483_1250x1000_t3cksofn.jpg")
-                                                  : NetworkImage(
-                                                      mypost['image']),
-                                              radius: size.height * 0.08,
-                                            ),
-                                          ),
-                                          Column(
-                                            children: [
-                                              Text("${mypost['title']}",
-                                                  style: const TextStyle(
-                                                      fontSize: 15)),
-                                              Text("${mypost['explanation']}",
-                                                  style: const TextStyle(
-                                                      fontSize: 15)),
-                                            ],
-                                          ),
-                                        ],
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            bottom: 8.0, top: 8.0),
+                                        child: Text("${mypost['title']}",
+                                            // ignore: prefer_const_constructors
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold)),
                                       ),
+                                      Text("${mypost['explanation']}",
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              color: Colors.black
+                                                  .withOpacity(0.6))),
                                     ],
                                   ),
                                 ),
-                              );
-                            });
-                      }
-                    }),
-              ),
+                              ),
+                            );
+                          });
+                    }
+                  }),
               Padding(
                 padding: const EdgeInsets.only(
-                    right: 90.0, left: 90.0, top: 20.0, bottom: 30.0),
+                    right: 90.0, left: 90.0, top: 50.0, bottom: 30.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   // ignore: prefer_const_literals_to_create_immutables
@@ -165,33 +142,70 @@ class _BlogState extends State<Blog> {
                 ),
               ),
               Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 // ignore: prefer_const_literals_to_create_immutables
                 children: [
-                  const Padding(
-                    padding: EdgeInsets.all(10.0),
-                    child: Text("support@openui.design",
-                        style: TextStyle(fontSize: 15)),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.all(10.0),
-                    child: Text("+60 825 876", style: TextStyle(fontSize: 15)),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.all(10.0),
-                    child: Text("08:00 - 22:00 - Everyday",
-                        style: TextStyle(fontSize: 15)),
-                  ),
+                  StreamBuilder<QuerySnapshot>(
+                      stream: _statusService.getContact(),
+                      builder: (context, snapshot) {
+                        if (!snapshot.hasData) {
+                          return const Text(
+                            'no data...',
+                          );
+                        } else {
+                          return ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              scrollDirection: Axis.vertical,
+                              shrinkWrap: true,
+                              itemCount: snapshot.data?.docs.length,
+                              itemBuilder: (context, index) {
+                                DocumentSnapshot mypost =
+                                    snapshot.data!.docs[index];
+                                // ignore: avoid_unnecessary_containers
+                                return Container(
+                                  child: Column(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text("${mypost['email']}",
+                                            style:
+                                                const TextStyle(fontSize: 16)),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text("${mypost['phone']}",
+                                            style:
+                                                const TextStyle(fontSize: 16)),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text("${mypost['workingHours']}",
+                                            style:
+                                                const TextStyle(fontSize: 16)),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              });
+                        }
+                      }),
                 ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 // ignore: prefer_const_literals_to_create_immutables
                 children: [
-                  const Padding(
-                    padding:
-                        EdgeInsets.only(left: 50.0, top: 50.0, bottom: 40.0),
-                    child: Text("About",
-                        style: TextStyle(color: Colors.black, fontSize: 18)),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: 50.0, top: 50.0, bottom: 40.0),
+                    child: InkWell(
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const About()),
+                      ),
+                      child: const Text("About",
+                          style: TextStyle(color: Colors.black, fontSize: 18)),
+                    ),
                   ),
                   const Padding(
                     padding: EdgeInsets.only(top: 50.0, bottom: 40.0),

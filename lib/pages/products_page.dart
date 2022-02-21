@@ -97,13 +97,9 @@ class _ProductsState extends State<Products> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  CircleAvatar(
-                                    backgroundImage: mypost['image'] == ""
-                                        ? const NetworkImage(
-                                            "https://www.gentas.com.tr/wp-content/uploads/2021/05/3190-siyah_renk_g483_1250x1000_t3cksofn.jpg")
-                                        : NetworkImage(mypost['image']),
-                                    radius: size.height * 0.08,
-                                  ),
+                                  Image(
+                                      height: 140,
+                                      image: NetworkImage(mypost['image'])),
                                   Column(
                                     children: [
                                       Padding(
