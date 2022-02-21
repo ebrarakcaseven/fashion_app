@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:new_design/navigaton_drawer.dart';
 import 'package:new_design/pages/blog_pages.dart';
+import 'package:new_design/pages/collection/colleciton_pages.dart';
 import 'package:new_design/pages/products_page.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -86,7 +87,7 @@ class _HomeState extends State<Home> {
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 15.0),
+                  padding: const EdgeInsets.only(top: 15.0, bottom: 9.0),
                   child: Container(
                     margin: const EdgeInsets.all(15),
                     child: CarouselSlider.builder(
@@ -148,7 +149,7 @@ class _HomeState extends State<Home> {
                   ),
                 ),
                 const Padding(
-                  padding: EdgeInsets.only(top: 20.0),
+                  padding: EdgeInsets.only(top: 30.0),
                   child: Text("N E W  A R R I V A L",
                       style: TextStyle(color: Colors.black, fontSize: 25)),
                 ),
@@ -278,7 +279,7 @@ class _HomeState extends State<Home> {
                             physics: const NeverScrollableScrollPhysics(),
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
-                            itemCount: snapshot.data?.docs.length,
+                            itemCount: 1,
                             itemBuilder: (context, index) {
                               DocumentSnapshot mypost =
                                   snapshot.data!.docs[index];
@@ -289,9 +290,17 @@ class _HomeState extends State<Home> {
                                   child: Container(
                                     child: Column(
                                       children: [
-                                        Image(
-                                            image:
-                                                NetworkImage(mypost['image']))
+                                        InkWell(
+                                          onTap: () => Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const Collection()),
+                                          ),
+                                          child: Image(
+                                              image: NetworkImage(
+                                                  mypost['image'])),
+                                        )
                                       ],
                                     ),
                                   ),
