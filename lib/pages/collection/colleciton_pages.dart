@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:new_design/navigaton_drawer.dart';
 import 'package:new_design/pages/about_pages.dart';
 import 'package:new_design/pages/blog_pages.dart';
+import 'package:new_design/pages/collection/detail_page.dart';
+import 'package:new_design/pages/contact_page.dart';
+import 'package:new_design/pages/home_page.dart';
 import 'package:new_design/service/status_service.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -23,23 +26,28 @@ class _CollectionState extends State<Collection> {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.black,
-        //title: Text("OPEN FASHİON", style: TextStyle(color: Colors.black)),
-        title: RichText(
-            textAlign: TextAlign.center,
-            text: const TextSpan(
-                text: "OPEN",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 19,
-                    fontFamily: 'Tenor Sans'),
-                children: <TextSpan>[
-                  TextSpan(
-                      text: '\nFASHİON',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 19,
-                          fontFamily: 'Tenor Sans'))
-                ])),
+        title: InkWell(
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const Home()),
+          ),
+          child: RichText(
+              textAlign: TextAlign.center,
+              text: const TextSpan(
+                  text: "OPEN",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 19,
+                      fontFamily: 'Tenor Sans'),
+                  children: <TextSpan>[
+                    TextSpan(
+                        text: '\nFASHİON',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 19,
+                            fontFamily: 'Tenor Sans'))
+                  ])),
+        ),
         // iconTheme: const IconThemeData(color: Colors.white),
         actions: <Widget>[
           IconButton(
@@ -47,24 +55,21 @@ class _CollectionState extends State<Collection> {
               Icons.search,
               color: Colors.white,
             ),
-            onPressed: () {
-              // do something
-            },
+            onPressed: () {},
           ),
           IconButton(
             icon: const Icon(
               Icons.shopping_bag,
               color: Colors.white,
             ),
-            onPressed: () {
-              // do something
-            },
+            onPressed: () {},
           )
         ],
       ),
       backgroundColor: Colors.black,
       body: SingleChildScrollView(
           child: Column(children: [
+        Container(height: 70, color: Colors.black),
         StreamBuilder<QuerySnapshot>(
             stream: _statusService.getCollection(),
             builder: (context, snapshot) {
@@ -88,8 +93,7 @@ class _CollectionState extends State<Collection> {
                             child: Column(
                               children: [
                                 Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 40.0, bottom: 40.0),
+                                  padding: const EdgeInsets.only(bottom: 25.0),
                                   child: Text("${mypost['toptitle']}",
                                       style: const TextStyle(
                                           fontSize: 27,
@@ -97,7 +101,20 @@ class _CollectionState extends State<Collection> {
                                           fontWeight: FontWeight.bold,
                                           fontStyle: FontStyle.italic)),
                                 ),
-                                Image(image: NetworkImage(mypost['image'])),
+                                InkWell(
+                                    onTap: () {
+                                      // ignore: unused_label
+                                      onTap:
+                                      () => Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    CollectionDetail(snapshot
+                                                        .data!.docs[index])),
+                                          );
+                                    },
+                                    child: Image(
+                                        image: NetworkImage(mypost['image']))),
                                 Padding(
                                   padding: const EdgeInsets.only(
                                       top: 20.0, bottom: 5.0),
@@ -202,10 +219,16 @@ class _CollectionState extends State<Collection> {
                         style: TextStyle(color: Colors.black, fontSize: 18)),
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.only(top: 50.0, bottom: 20.0),
-                  child: Text("Contact",
-                      style: TextStyle(color: Colors.black, fontSize: 18)),
+                Padding(
+                  padding: const EdgeInsets.only(top: 50.0, bottom: 20.0),
+                  child: InkWell(
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const Contact()),
+                    ),
+                    child: const Text("Contact",
+                        style: TextStyle(color: Colors.black, fontSize: 18)),
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(
