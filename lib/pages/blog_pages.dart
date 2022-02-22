@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:new_design/navigaton_drawer.dart';
+import 'package:new_design/pages/contact_page.dart';
 import 'package:new_design/pages/home_page.dart';
 import 'package:new_design/service/status_service.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -79,7 +80,7 @@ class _BlogState extends State<Blog> {
             // ignore: prefer_const_literals_to_create_immutables
             children: [
               const Padding(
-                padding: EdgeInsets.only(top: 35.0, bottom: 35.0),
+                padding: EdgeInsets.only(top: 35.0, bottom: 25.0),
                 child: Text("B L O G",
                     style: TextStyle(color: Colors.black, fontSize: 25)),
               ),
@@ -107,19 +108,32 @@ class _BlogState extends State<Blog> {
                                   child: Column(
                                     children: [
                                       Padding(
-                                        padding: const EdgeInsets.only(
-                                            bottom: 8.0, top: 8.0),
-                                        child: Text("${mypost['title']}",
-                                            // ignore: prefer_const_constructors
-                                            style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.bold)),
+                                        padding:
+                                            const EdgeInsets.only(top: 10.0),
+                                        child: Image(
+                                            height: 130,
+                                            image:
+                                                NetworkImage(mypost['image'])),
                                       ),
-                                      Text("${mypost['explanation']}",
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              color: Colors.black
-                                                  .withOpacity(0.6))),
+                                      Column(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                bottom: 8.0, top: 8.0),
+                                            child: Text("${mypost['title']}",
+                                                // ignore: prefer_const_constructors
+                                                style: TextStyle(
+                                                    fontSize: 16,
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                          ),
+                                          Text("${mypost['explanation']}",
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  color: Colors.black
+                                                      .withOpacity(0.6))),
+                                        ],
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -207,10 +221,17 @@ class _BlogState extends State<Blog> {
                           style: TextStyle(color: Colors.black, fontSize: 18)),
                     ),
                   ),
-                  const Padding(
-                    padding: EdgeInsets.only(top: 50.0, bottom: 40.0),
-                    child: Text("Contact",
-                        style: TextStyle(color: Colors.black, fontSize: 18)),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 50.0, bottom: 40.0),
+                    child: InkWell(
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Contact()),
+                      ),
+                      child: const Text("Contact",
+                          style: TextStyle(color: Colors.black, fontSize: 18)),
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(

@@ -1,7 +1,8 @@
+// ignore_for_file: sized_box_for_whitespace
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:new_design/pages/blog_pages.dart';
-import 'package:new_design/pages/collection/detail_page.dart';
 import 'package:new_design/pages/contact_page.dart';
 import 'package:new_design/pages/details_page.dart';
 import 'package:new_design/service/status_service.dart';
@@ -96,8 +97,10 @@ class _ProductsState extends State<Products> {
                       ),
                     ),
                     Expanded(
+                      // ignore: avoid_unnecessary_containers
                       child: Container(
                           child: TabBarView(children: [
+                        // ignore: avoid_unnecessary_containers
                         Container(
                           child: StreamBuilder<QuerySnapshot>(
                               stream: _statusService.getProducts(),
@@ -290,17 +293,20 @@ class _ProductsState extends State<Products> {
                                 }
                               }),
                         ),
+
                         Container(
                           height: 50,
+                          // ignore: prefer_const_constructors
                           child: Text("b"),
                         ),
+
                         Container(
                           height: 50,
-                          child: Text("c"),
+                          child: const Text("c"),
                         ),
                         Container(
                           height: 50,
-                          child: Text("d"),
+                          child: const Text("d"),
                         ),
                       ])),
                     )

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:new_design/navigaton_drawer.dart';
 import 'package:new_design/pages/about_pages.dart';
 import 'package:new_design/pages/blog_pages.dart';
-import 'package:new_design/pages/collection/detail_page.dart';
 import 'package:new_design/pages/contact_page.dart';
 import 'package:new_design/pages/home_page.dart';
 import 'package:new_design/service/status_service.dart';

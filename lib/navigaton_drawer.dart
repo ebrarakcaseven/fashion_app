@@ -21,6 +21,7 @@ class NavigatonDrawerWidget extends StatelessWidget {
             )
           ])),
         ),
+        // ignore: sized_box_for_whitespace
         Container(
           height: 400,
           child: DefaultTabController(
@@ -39,8 +40,10 @@ class NavigatonDrawerWidget extends StatelessWidget {
                   ),
                 ),
                 Expanded(
+                  // ignore: avoid_unnecessary_containers
                   child: Container(
                       child: TabBarView(children: [
+                    // ignore: avoid_unnecessary_containers
                     Container(
                         child: Column(children: [
                       ListTile(
@@ -68,14 +71,14 @@ class NavigatonDrawerWidget extends StatelessWidget {
                         onTap: () {},
                       ),
                     ])),
-                    Container(
+                    SizedBox(
                       height: 50,
                       child: ListTile(
                         title: const Text('New'),
                         onTap: () {},
                       ),
                     ),
-                    Container(
+                    SizedBox(
                       height: 50,
                       child: ListTile(
                         title: const Text('New'),

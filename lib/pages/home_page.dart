@@ -30,7 +30,7 @@ class _HomeState extends State<Home> {
     'https://static.zara.net/photos///2022/V/0/1/p/5584/018/615/2/w/610/5584018615_15_1_1.jpg?ts=1643974313743'
   ];
 
-  // ignore: prefer_final_fields
+  // ignore: prefer_final_fields, unused_field
   List<String> _choices = <String>['All', 'Apparel', 'Dress', 'Bag'];
   String answer = "All";
   String selected = "All";
@@ -178,8 +178,10 @@ class _HomeState extends State<Home> {
                           ),
                         ),
                         Expanded(
+                          // ignore: avoid_unnecessary_containers
                           child: Container(
                               child: TabBarView(children: [
+                            // ignore: avoid_unnecessary_containers
                             Container(
                               child: Column(
                                 children: [
@@ -274,16 +276,22 @@ class _HomeState extends State<Home> {
                                 ],
                               ),
                             ),
+                            // ignore: sized_box_for_whitespace
                             Container(
                               height: 50,
+                              // ignore: prefer_const_constructors
                               child: Text("b"),
                             ),
+                            // ignore: sized_box_for_whitespace
                             Container(
                               height: 50,
+                              // ignore: prefer_const_constructors
                               child: Text("c"),
                             ),
+                            // ignore: sized_box_for_whitespace
                             Container(
                               height: 50,
+                              // ignore: prefer_const_constructors
                               child: Text("d"),
                             ),
                           ])),
