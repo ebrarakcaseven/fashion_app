@@ -9,6 +9,7 @@ import 'package:new_design/pages/contact_page.dart';
 import 'package:new_design/pages/products_page.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:new_design/pages/search_page.dart';
 import 'package:new_design/service/status_service.dart';
 
 import 'about_pages.dart';
@@ -67,7 +68,10 @@ class _HomeState extends State<Home> {
                 Icons.search,
                 color: Colors.black,
               ),
-              onPressed: () {},
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Search()),
+              ),
             ),
             IconButton(
               icon: const Icon(
@@ -291,7 +295,7 @@ class _HomeState extends State<Home> {
                   ),
                 ),
                 StreamBuilder<QuerySnapshot>(
-                    stream: _statusService.getCollection(),
+                    stream: _statusService.getCollectionCover(),
                     builder: (context, snapshot) {
                       if (!snapshot.hasData) {
                         return const Text(
@@ -302,7 +306,7 @@ class _HomeState extends State<Home> {
                             physics: const NeverScrollableScrollPhysics(),
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
-                            itemCount: 1,
+                            itemCount: 2,
                             itemBuilder: (context, index) {
                               DocumentSnapshot mypost =
                                   snapshot.data!.docs[index];
