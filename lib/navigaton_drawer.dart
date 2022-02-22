@@ -21,29 +21,70 @@ class NavigatonDrawerWidget extends StatelessWidget {
             )
           ])),
         ),
-        ListTile(
-          title: const Text('New'),
-          onTap: () {},
-        ),
-        ListTile(
-          title: const Text('Apparel'),
-          onTap: () {},
-        ),
-        ListTile(
-          title: const Text('Bag'),
-          onTap: () {},
-        ),
-        ListTile(
-          title: const Text('Shoes'),
-          onTap: () {},
-        ),
-        ListTile(
-          title: const Text('Beauty'),
-          onTap: () {},
-        ),
-        ListTile(
-          title: const Text('Accessories'),
-          onTap: () {},
+        Container(
+          height: 400,
+          child: DefaultTabController(
+              length: 3,
+              child: Column(children: [
+                Container(
+                  height: 50,
+                  constraints: const BoxConstraints.expand(height: 50),
+                  child: const TabBar(
+                    tabs: [
+                      Tab(text: "WOMEN"),
+                      Tab(text: "MAN"),
+                      Tab(text: "KİDS"),
+                    ],
+                    labelColor: Colors.black,
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                      child: TabBarView(children: [
+                    Container(
+                        child: Column(children: [
+                      ListTile(
+                        title: const Text('New'),
+                        onTap: () {},
+                      ),
+                      ListTile(
+                        title: const Text('Apparel'),
+                        onTap: () {},
+                      ),
+                      ListTile(
+                        title: const Text('Bag'),
+                        onTap: () {},
+                      ),
+                      ListTile(
+                        title: const Text('Shoes'),
+                        onTap: () {},
+                      ),
+                      ListTile(
+                        title: const Text('Beauty'),
+                        onTap: () {},
+                      ),
+                      ListTile(
+                        title: const Text('Accessories'),
+                        onTap: () {},
+                      ),
+                    ])),
+                    Container(
+                      height: 50,
+                      child: ListTile(
+                        title: const Text('New'),
+                        onTap: () {},
+                      ),
+                    ),
+                    Container(
+                      height: 50,
+                      child: ListTile(
+                        title: const Text('New'),
+                        onTap: () {},
+                      ),
+                    ),
+                  ])),
+                )
+              ])),
         ),
         ListTile(
           leading: const Icon(Icons.phone),
