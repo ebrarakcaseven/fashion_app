@@ -23,6 +23,8 @@ class _ProductsState extends State<Products> {
   StatusService _statusService = StatusService();
   @override
   Widget build(BuildContext context) {
+    // ignore: prefer_typing_uninitialized_variables
+    var _id;
     // ignore: unused_local_variable
     var size = MediaQuery.of(context).size;
     return Scaffold(
@@ -133,12 +135,16 @@ class _ProductsState extends State<Products> {
                                                   MainAxisAlignment.center,
                                               children: [
                                                 InkWell(
-                                                  onTap: () => Navigator.push(
+                                                  // ignore: avoid_print
+                                                  onTap: () => print(
+                                                    _id = "${mypost['id']}",
+                                                  ),
+                                                  /*Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
                                                         builder: (context) =>
                                                             const Details()),
-                                                  ),
+                                                  ),*/
                                                   child: Image(
                                                       height: 140,
                                                       image: NetworkImage(
