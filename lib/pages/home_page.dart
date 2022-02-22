@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:new_design/navigaton_drawer.dart';
 import 'package:new_design/pages/blog_pages.dart';
+import 'package:new_design/pages/checkout_page.dart';
 import 'package:new_design/pages/collection/colleciton_pages.dart';
 import 'package:new_design/pages/contact_page.dart';
 import 'package:new_design/pages/products_page.dart';
@@ -78,7 +79,10 @@ class _HomeState extends State<Home> {
                 Icons.shopping_bag,
                 color: Colors.black,
               ),
-              onPressed: () {},
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Checkout()),
+              ),
             )
           ],
         ),
