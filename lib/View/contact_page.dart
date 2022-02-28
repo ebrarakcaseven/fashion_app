@@ -3,9 +3,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:new_design/navigaton_drawer.dart';
-import 'package:new_design/pages/about_pages.dart';
-import 'package:new_design/pages/blog_pages.dart';
-import 'package:new_design/pages/home_page.dart';
+import 'package:new_design/View/about_pages.dart';
+import 'package:new_design/View/blog_pages.dart';
+import 'package:new_design/View/home_page.dart';
 import 'package:new_design/service/status_service.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -142,11 +142,19 @@ class _ContactState extends State<Contact> {
                                       height: 45,
                                       width: 130,
                                       color: Colors.black,
-                                      child: const Center(
-                                        child: Text("TEXT US",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 16)),
+                                      child: Center(
+                                        child: InkWell(
+                                          onTap: () => Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const textUs()),
+                                          ),
+                                          child: const Text("TEXT US",
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 16)),
+                                        ),
                                       )),
                                 ),
                                 const Padding(
@@ -297,5 +305,119 @@ class _ContactState extends State<Contact> {
             ),
           ]),
         )));
+  }
+}
+
+// ignore: camel_case_types
+class textUs extends StatefulWidget {
+  const textUs({Key? key}) : super(key: key);
+
+  @override
+  _textUsState createState() => _textUsState();
+}
+
+// ignore: camel_case_types
+class _textUsState extends State<textUs> {
+  final emailController = TextEditingController();
+  final messageController = TextEditingController();
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      drawer: const NavigatonDrawerWidget(),
+      appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        title: InkWell(
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const Home()),
+          ),
+          child: RichText(
+              textAlign: TextAlign.center,
+              text: const TextSpan(
+                  text: "OPEN",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 19,
+                      fontFamily: 'Tenor Sans'),
+                  children: <TextSpan>[
+                    TextSpan(
+                        text: '\nFASHİON',
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 19,
+                            fontFamily: 'Tenor Sans'))
+                  ])),
+        ),
+        iconTheme: const IconThemeData(color: Colors.black),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(
+              Icons.search,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              // do something
+            },
+          ),
+          IconButton(
+            icon: const Icon(
+              Icons.shopping_bag,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              // do something
+            },
+          )
+        ],
+      ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 20.0, right: 20.0, top: 50.0),
+            child: TextField(
+              controller: emailController,
+              maxLines: 1,
+              decoration: const InputDecoration(
+                hintText: "Email",
+                border: OutlineInputBorder(),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+                left: 20.0, right: 20.0, top: 20.0, bottom: 20.0),
+            child: TextField(
+              controller: messageController,
+              maxLines: 10,
+              decoration: const InputDecoration(
+                hintText: "Message",
+                border: OutlineInputBorder(),
+              ),
+            ),
+          ),
+          Container(
+              height: 45,
+              width: 130,
+              color: Colors.black,
+              child: Center(
+                child: InkWell(
+                  onTap: () {
+                    // ignore: unused_local_variable
+                    FirebaseFirestore firestore = FirebaseFirestore.instance;
+                    CollectionReference messageRef =
+                        FirebaseFirestore.instance.collection('textus');
+                    messageRef.add({
+                      'message': messageController.text,
+                      'email': emailController.text,
+                    });
+                  },
+                  child: const Text("SEND",
+                      style: TextStyle(color: Colors.white, fontSize: 16)),
+                ),
+              )),
+        ],
+      ),
+    );
   }
 }
