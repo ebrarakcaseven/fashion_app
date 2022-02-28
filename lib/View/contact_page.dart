@@ -320,6 +320,7 @@ class textUs extends StatefulWidget {
 class _textUsState extends State<textUs> {
   final emailController = TextEditingController();
   final messageController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -371,52 +372,56 @@ class _textUsState extends State<textUs> {
           )
         ],
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 20.0, right: 20.0, top: 50.0),
-            child: TextField(
-              controller: emailController,
-              maxLines: 1,
-              decoration: const InputDecoration(
-                hintText: "Email",
-                border: OutlineInputBorder(),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(
-                left: 20.0, right: 20.0, top: 20.0, bottom: 20.0),
-            child: TextField(
-              controller: messageController,
-              maxLines: 10,
-              decoration: const InputDecoration(
-                hintText: "Message",
-                border: OutlineInputBorder(),
-              ),
-            ),
-          ),
-          Container(
-              height: 45,
-              width: 130,
-              color: Colors.black,
-              child: Center(
-                child: InkWell(
-                  onTap: () {
-                    // ignore: unused_local_variable
-                    FirebaseFirestore firestore = FirebaseFirestore.instance;
-                    CollectionReference messageRef =
-                        FirebaseFirestore.instance.collection('textus');
-                    messageRef.add({
-                      'message': messageController.text,
-                      'email': emailController.text,
-                    });
-                  },
-                  child: const Text("SEND",
-                      style: TextStyle(color: Colors.white, fontSize: 16)),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding:
+                  const EdgeInsets.only(left: 20.0, right: 20.0, top: 50.0),
+              child: TextField(
+                controller: emailController,
+                maxLines: 1,
+                decoration: const InputDecoration(
+                  hintText: "Email",
+                  border: OutlineInputBorder(),
                 ),
-              )),
-        ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                  left: 20.0, right: 20.0, top: 20.0, bottom: 20.0),
+              child: TextField(
+                controller: messageController,
+                maxLines: 10,
+                maxLength: 500,
+                decoration: const InputDecoration(
+                  hintText: "Message",
+                  border: OutlineInputBorder(),
+                ),
+              ),
+            ),
+            Container(
+                height: 45,
+                width: 130,
+                color: Colors.black,
+                child: Center(
+                  child: InkWell(
+                    onTap: () {
+                      // ignore: unused_local_variable
+                      FirebaseFirestore firestore = FirebaseFirestore.instance;
+                      CollectionReference messageRef =
+                          FirebaseFirestore.instance.collection('textus');
+                      messageRef.add({
+                        'message': messageController.text,
+                        'email': emailController.text,
+                      });
+                    },
+                    child: const Text("SEND",
+                        style: TextStyle(color: Colors.white, fontSize: 16)),
+                  ),
+                )),
+          ],
+        ),
       ),
     );
   }
