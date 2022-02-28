@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:new_design/navigaton_drawer.dart';
-import 'package:new_design/pages/home_page.dart';
-import 'package:new_design/pages/search_page.dart';
+import 'package:new_design/View/home_page.dart';
+import 'package:new_design/View/search_page.dart';
 
 class Checkout extends StatefulWidget {
   const Checkout({Key? key}) : super(key: key);

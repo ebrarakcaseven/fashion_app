@@ -8,17 +8,17 @@ class Search extends StatefulWidget {
 }
 
 class _SearchState extends State<Search> {
+  // ignore: prefer_final_fields
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Column(children: const [
-      Padding(
-        padding: EdgeInsets.only(top: 70.0, left: 20.0, right: 20.0),
+    return const Scaffold(
+      body: Padding(
+        padding: EdgeInsets.only(top: 50.0, left: 20, right: 20),
         child: TextField(
-          decoration: InputDecoration(
-              hintText: 'Search items', prefixIcon: Icon(Icons.search)),
-        ),
-      )
-    ]));
+            decoration: InputDecoration(
+                hintText: "Search", prefixIcon: Icon(Icons.search))),
+      ),
+    );
   }
 }

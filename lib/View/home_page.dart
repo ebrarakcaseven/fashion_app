@@ -3,14 +3,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:new_design/navigaton_drawer.dart';
-import 'package:new_design/pages/blog_pages.dart';
-import 'package:new_design/pages/checkout_page.dart';
-import 'package:new_design/pages/collection/colleciton_pages.dart';
-import 'package:new_design/pages/contact_page.dart';
-import 'package:new_design/pages/products_page.dart';
+import 'package:new_design/View/blog_pages.dart';
+import 'package:new_design/View/checkout_page.dart';
+import 'package:new_design/View/collection/colleciton_pages.dart';
+import 'package:new_design/View/contact_page.dart';
+import 'package:new_design/View/products_page.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:new_design/pages/search_page.dart';
+import 'package:new_design/View/search_page.dart';
 import 'package:new_design/service/status_service.dart';
 
 import 'about_pages.dart';
@@ -217,38 +217,37 @@ class _HomeState extends State<Home> {
                                                           top: 15.0,
                                                           bottom: 5),
                                                   // ignore: avoid_unnecessary_containers
-                                                  child: Container(
-                                                    child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Image(
-                                                            height: 140,
-                                                            image: NetworkImage(
-                                                                mypost[
-                                                                    'image'])),
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .only(
-                                                                  top: 8.0,
-                                                                  left: 5.0),
-                                                          child: Text(
-                                                              "${mypost['productsName']}",
-                                                              style:
-                                                                  const TextStyle(
-                                                                      fontSize:
-                                                                          13)),
-                                                        ),
-                                                        Text(
-                                                            "${mypost['productsPrice']}",
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Image(
+                                                          height: 140,
+                                                          image: NetworkImage(
+                                                              mypost['image'])),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                top: 8.0,
+                                                                left: 20.0),
+                                                        child: Text(
+                                                            "${mypost['productsName']}",
                                                             style:
                                                                 const TextStyle(
                                                                     fontSize:
                                                                         13)),
-                                                      ],
-                                                    ),
+                                                      ),
+                                                      Text(
+                                                          "${mypost['productsPrice']}",
+                                                          style:
+                                                              const TextStyle(
+                                                            fontSize: 13,
+                                                            color: Color(
+                                                                0xFFDD8560),
+                                                          )),
+                                                    ],
                                                   ),
                                                 );
                                               });

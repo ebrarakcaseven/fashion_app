@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:new_design/navigaton_drawer.dart';
-import 'package:new_design/pages/about_pages.dart';
-import 'package:new_design/pages/blog_pages.dart';
-import 'package:new_design/pages/contact_page.dart';
-import 'package:new_design/pages/home_page.dart';
+import 'package:new_design/View/about_pages.dart';
+import 'package:new_design/View/blog_pages.dart';
+import 'package:new_design/View/contact_page.dart';
+import 'package:new_design/View/home_page.dart';
 import 'package:new_design/service/status_service.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 

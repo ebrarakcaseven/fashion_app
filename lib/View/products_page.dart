@@ -2,14 +2,16 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:new_design/pages/blog_pages.dart';
-import 'package:new_design/pages/contact_page.dart';
-import 'package:new_design/pages/details_page.dart';
+import 'package:new_design/View/blog_pages.dart';
+import 'package:new_design/View/contact_page.dart';
+import 'package:new_design/View/details_page.dart';
 import 'package:new_design/service/status_service.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../navigaton_drawer.dart';
 import 'about_pages.dart';
 import 'home_page.dart';
+
+// ignore: prefer_typing_uninitialized_variables, unused_element
 
 class Products extends StatefulWidget {
   const Products({Key? key}) : super(key: key);
@@ -21,10 +23,10 @@ class Products extends StatefulWidget {
 class _ProductsState extends State<Products> {
   // ignore: prefer_final_fields
   StatusService _statusService = StatusService();
+
   @override
   Widget build(BuildContext context) {
     // ignore: prefer_typing_uninitialized_variables
-    var _id;
     // ignore: unused_local_variable
     var size = MediaQuery.of(context).size;
     return Scaffold(
@@ -136,15 +138,17 @@ class _ProductsState extends State<Products> {
                                               children: [
                                                 InkWell(
                                                   // ignore: avoid_print
-                                                  onTap: () => print(
+                                                  onTap:
+                                                      () => /* print(
                                                     _id = "${mypost['id']}",
                                                   ),
-                                                  /*Navigator.push(
+*/
+                                                          Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
                                                         builder: (context) =>
                                                             const Details()),
-                                                  ),*/
+                                                  ),
                                                   child: Image(
                                                       height: 140,
                                                       image: NetworkImage(
@@ -305,7 +309,6 @@ class _ProductsState extends State<Products> {
                           // ignore: prefer_const_constructors
                           child: Text("b"),
                         ),
-
                         Container(
                           height: 50,
                           child: const Text("c"),
